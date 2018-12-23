@@ -1,7 +1,7 @@
 package workqueue
 
 import (
-	"gitlab.ptit365.com/clock"
+	"go-common/clock"
 	"sync"
 	"time"
 )

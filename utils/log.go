@@ -2,8 +2,8 @@ package utils
 
 import (
 	"fmt"
+	"github.com/op/go-logging"
 	"io"
-	"op/go-logging"
 	"os"
 	"time"
 )

@@ -1,6 +1,9 @@
 package utils
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 const DateLayout string = "2006-01-02"
 const DateTimeLayout string = "2006-01-02 15:04:05"
@@ -42,4 +45,11 @@ func ToDatetimeStringWithoutDash(t time.Time) string {
 
 func ToDateString(t time.Time) string {
 	return t.Format(DateLayout)
+}
+
+const maxTimestamp = uint64(99999999999999)
+
+func ReverseTimeStamp(timestamp string) string {
+	value, _ := strconv.ParseUint(timestamp, 10, 64)
+	return strconv.FormatUint(maxTimestamp-value, 10)
 }
