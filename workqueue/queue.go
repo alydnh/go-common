@@ -1,7 +1,6 @@
 package workqueue
 
 import (
-	"go-common/clock"
 	"sync"
 	"time"
 )
@@ -21,14 +20,14 @@ func New() *Type {
 }
 
 func NewNamed(name string) *Type {
-	rc := clock.RealClock{}
+	rc := RealClock{}
 	return newQueue(
 		rc,
 		defaultUnfinishedWorkUpdatePeriod,
 	)
 }
 
-func newQueue(c clock.Clock, updatePeriod time.Duration) *Type {
+func newQueue(c Clock, updatePeriod time.Duration) *Type {
 	t := &Type{
 		clock:                      c,
 		dirty:                      set{},
@@ -63,7 +62,7 @@ type Type struct {
 	shuttingDown bool
 
 	unfinishedWorkUpdatePeriod time.Duration
-	clock                      clock.Clock
+	clock                      Clock
 }
 
 type empty struct{}
