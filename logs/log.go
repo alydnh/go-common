@@ -3,9 +3,9 @@ package logs
 import (
 	"fmt"
 	"github.com/op/go-logging"
-	"go-common/utils"
 	"io"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -40,7 +40,7 @@ func NewLoggerWithConfig(stdout, syslog bool, level, prefix string, ws ...io.Wri
 func NewLogger(cfg map[string]interface{}, ws ...io.Writer) (Logger, error) {
 	logConfig := ConfigGetter(cfg)
 	moduleName := logConfig.Prefix
-	if utils.EmptyOrWhiteSpace(moduleName) {
+	if strings.TrimSpace(moduleName) == ""{
 		moduleName = "DEFAULT"
 	}
 	logger := logging.MustGetLogger(moduleName)
@@ -148,7 +148,7 @@ type defaultLogger struct {
 }
 
 func (d defaultLogger) print(level string, v []interface{}) {
-	prefix := fmt.Sprintf("%s [%s]\t", utils.ToDatetimeString(time.Now()), d.prefix)
+	prefix := fmt.Sprintf("%s [%s]\t", time.Now().Format(logTimeLayout), d.prefix)
 	fmt.Println(append(append([]interface{}{prefix, level, " "}), v...)...)
 }
 
@@ -175,3 +175,5 @@ func (d defaultLogger) Critical(v ...interface{}) {
 func (d defaultLogger) Fatal(v ...interface{}) {
 	d.print("FATAL", v)
 }
+
+const logTimeLayout = "2006-01-02 15:04:05"
